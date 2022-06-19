@@ -6,7 +6,7 @@ module.exports = [
         "logo": Globals.angels.logo,
         "seuil": 10,
         "idcible": Globals.all.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "vitesse",
         "unlocked": false
     },
@@ -15,7 +15,7 @@ module.exports = [
         "logo": Globals.angels.logo,
         "seuil": 50,
         "idcible": Globals.all.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -24,7 +24,7 @@ module.exports = [
         "logo": Globals.angels.logo,
         "seuil": 100,
         "idcible": Globals.all.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -33,7 +33,7 @@ module.exports = [
         "logo": Globals.angels.logo,
         "seuil": 150,
         "idcible": Globals.all.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "vitesse",
         "unlocked": false
     },
@@ -42,7 +42,7 @@ module.exports = [
         "logo": Globals.angels.logo,
         "seuil": 500,
         "idcible": Globals.all.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },    
@@ -55,7 +55,7 @@ module.exports = [
         "logo": "icones/dame_du_lac.png",
         "seuil": 10,
         "idcible": Globals.all.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -64,7 +64,7 @@ module.exports = [
         "logo": "icones/dame_du_lac.png",
         "seuil": 100,
         "idcible": Globals.all.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -73,7 +73,7 @@ module.exports = [
         "logo": "icones/dame_du_lac.png",
         "seuil": 10,
         "idcible": Globals.all.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },

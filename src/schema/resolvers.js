@@ -18,7 +18,9 @@ module.exports = {
         getWorld(parent, args, context) {
             //Calculate score
             context = calcScore(context)
+            //Save world
             saveWorld(context)
+
             return context.world
         }
     },
@@ -30,22 +32,37 @@ module.exports = {
             //Find product in world
             let product = context.world.products.find(product => product.id === args.id)
             if (!product) throw new Error(`Le produit avec l'id ${args.id} n'existe pas`)
-            if (context.world.money < product.cout) throw new Error(ERRORS.INSUFFICIENT_MONEY)
+            if (context.world.money < calcGeometricSequenceNSum(product.cout, product.croissance, args.quantite))
+                throw new Error(ERRORS.INSUFFICIENT_MONEY)
 
             //Update product quantity & cost
             product.quantite += args.quantite
-            product.cout = calculateGeometricSequence(product.cout, product.croissance, args.quantite)
+            product.cout = getGeometricSequenceNTerm(product.cout, product.croissance, args.quantite + 1)
 
             //If product reached a new level, update product revenue or speed
-            let newLevel = product.paliers.find(palier => !palier.unlocked)
-            if (product.quantite === newLevel.seuil) {
-                //Unlock new level
-                newLevel.unlocked = true
-                context = updateProduct(context, newLevel)
-            }
+            let newLevel = product.paliers.forEach(palier => {
+                if (!palier.unlocked && product.quantite > palier.seuil) {
+                    //Unlock new level
+                    newLevel.unlocked = true
+                    context = updateProduct(context, newLevel)
+                }
+            })
+
+            //Also check allunlocks
+            context.world.allunlocks.forEach(level => {
+                if (!level.unlocked) {
+                    //Check that all products have reached the unlock threshold
+                    if (world.products.every(product => product.quantite >= level.seuil)) {
+                        //Unlock new level
+                        level.unlocked = true
+                        //Then update all products
+                        context = updateProduct(context, level)
+                    }
+                }
+            })
 
             //Update world's money
-            context.world.money = context.world.money - calculateGeometricSequence(product.cout, product.croissance, args.quantite)
+            context.world.money -= calcGeometricSequenceNSum(product.cout, product.croissance, args.quantite)
 
             //Save changes
             saveWorld(context)
@@ -90,8 +107,8 @@ module.exports = {
 
             let cashUpgrade = context.world.upgrades.find(upgrade => upgrade.name === args.name)
 
-            if (world.money < cashUpgrade.seuil) throw new Error(ERRORS.INSUFFICIENT_MONEY)
-            if (world.money < cashUpgrade.unlocked) throw new Error(ERRORS.INSUFFICIENT_MONEY)
+            if (context.world.money < cashUpgrade.seuil) throw new Error(ERRORS.INSUFFICIENT_MONEY)
+            if (cashUpgrade.unlocked) throw new Error(ERRORS.ALREADY_UNLOCKED)
 
             //Unlock upgrade
             cashUpgrade.unlocked = true
@@ -110,34 +127,36 @@ module.exports = {
 
             let angelUpgrade = context.world.angelupgrades.find(upgrade => upgrade.name === args.name)
 
-            if (world.money < angelUpgrade.seuil) throw new Error(ERRORS.INSUFFICIENT_MONEY)
-            if (world.money < angelUpgrade.unlocked) throw new Error(ERRORS.INSUFFICIENT_MONEY)
+            if (world.activeangels < angelUpgrade.seuil) throw new Error(ERRORS.INSUFFICIENT_MONEY)
+            if (angelUpgrade.unlocked) throw new Error(ERRORS.ALREADY_UNLOCKED)
 
             //Unlock upgrade
             angelUpgrade.unlocked = true
 
             //Update target characteristics
-            if (angelUpgrade.idcible === Globals.all.id) {
-                for (product of context.world.products) {
-                    context = updateProduct(context, angelUpgrade)
-                }
-            } else {
-                context = updateProduct(context, angelUpgrade)
-            }
+            context = updateProduct(context, angelUpgrade)
 
             context.world.money = context.world.money - angelUpgrade.seuil
 
             //Save world
             saveWorld(context)
-
+            return angelUpgrade
         },
         resetWorld(parent, args, context) {
             context = calcScore(context)
 
-            //EO a finir
+            let earnedAngels = Math.trunc(150 * Math.sqrt(context.world.score / Math.pow(10, 15)) - context.world.totalangels)
+            let totalangels = context.world.totalangels + earnedAngels
+            let score = context.world.score
 
             //Create new world from template
             context.world = world
+
+            //Update world's total angels & score
+            context.activeangels = earnedAngels
+            context.totalangels = totalangels
+            context.score = score
+
             //Save changes
             saveWorld(context)
 
@@ -147,12 +166,12 @@ module.exports = {
     }
 }
 
-function calculateGeometricSequence(startValue, ratio, n) {
-    return startValue * (ratio^n - 1) / (ratio - 1)
-    for (let i = 1; i < n; i++) {
-        startValue = startValue * ratio
-    }
-    return startValue
+function getGeometricSequenceNTerm(a0, q, n) {
+    return a0 * Math.pow(q, n - 1)
+}
+
+function calcGeometricSequenceNSum(a0, q, n) {
+    return (a0 - getGeometricSequenceNTerm(a0, q, n) * q) / (1 - q)
 }
 
 function calcScore(context) {
@@ -166,19 +185,21 @@ function calcScore(context) {
         if (product.managerUnlocked) {
             //Calculate number of products produced
             let nbOfProducts = Math.trunc(elapsedTime / product.vitesse)
-            //Update product production time according to elapsed time
-            product.timeleft = product.vitesse - (elapsedTime % product.vitesse)
-            //Elapsed time / speed products have been created
-            money = nbOfProducts * product.quantite * product.revenu * (1 + world.angelbonus * world.activeangels / 100)
+            //If products have been produced
+            if (nbOfProducts > 0) {
+                //Update product production time according to elapsed time
+                product.timeleft = product.vitesse - (elapsedTime % product.vitesse)
+                //Elapsed time / speed products have been created
+                money = nbOfProducts * product.quantite * product.revenu * (1 + world.angelbonus * world.activeangels / 100)
+            } else product.timeleft -= elapsedTime
         }
         //If production time is not null, product is being produced
         else if (product.timeleft !== 0) {
-            //If manager is not yet unlocked, only 1 product has been created
-            if (product.timeleft < 0) {
+            product.timeleft -= elapsedTime
+            if (product.timeleft < 0 && product.timeleft <= elapsedTime) {
+                //If manager is not yet unlocked, only 1 product has been created
                 product.timeleft = 0
                 money = product.revenu * product.quantite * (1 + world.angelbonus * world.activeangels / 100)
-            } else {
-                product.timeleft -= elapsedTime
             }
         }
     })
@@ -192,10 +213,22 @@ function calcScore(context) {
 }
 
 function updateProduct(context, upgrade) {
-    let newProduct = context.world.products.find(prod => prod.id === upgrade.idcible)
-    if (upgrade.typeratio === Globals.typeratio.gain) newProduct.revenu *= upgrade.ratio
-    else if (upgrade.typeratio === Globals.typeratio.vitesse) newProduct.vitesse /= upgrade.ratio
-    else if (upgrade.typeratio === Globals.typeratio.angels) null
+    function update(newProduct, upgrade) {
+        if (upgrade.typeratio === Globals.typeratio.gain) newProduct.revenu *= upgrade.ratio
+        else if (upgrade.typeratio === Globals.typeratio.vitesse) newProduct.vitesse = Math.round(newProduct.vitesse / upgrade.ratio)
+        else if (upgrade.typeratio === Globals.typeratio.angels) null
+        return newProduct
+    }
+
+    if (upgrade.idcible === Globals.all.id) {
+        context.world.products.forEach(product => {
+            product = update(product, upgrade)
+        })
+    } else {
+        let newProduct = context.world.products.find(prod => prod.id === upgrade.idcible)
+        newProduct = update(newProduct, upgrade)
+    }
+
     return context
 }
 

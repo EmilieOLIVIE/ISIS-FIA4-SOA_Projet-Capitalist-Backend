@@ -6,7 +6,7 @@ module.exports = [
         "logo": Globals.chou.logo,
         "seuil": 1e3,
         "idcible": Globals.chou.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -15,7 +15,7 @@ module.exports = [
         "logo": Globals.jambon.logo,
         "seuil": 5e3,
         "idcible": Globals.jambon.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -24,7 +24,7 @@ module.exports = [
         "logo": Globals.jeuSociete.logo,
         "seuil": 10e3,
         "idcible": Globals.jeuSociete.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -33,7 +33,7 @@ module.exports = [
         "logo": Globals.jeuSociete.logo,
         "seuil": 10e3,
         "idcible": Globals.jeuSociete.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -42,7 +42,7 @@ module.exports = [
         "logo": Globals.catapulte.logo,
         "seuil": 25e3,
         "idcible": Globals.catapulte.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -51,7 +51,7 @@ module.exports = [
         "logo": Globals.chevalier.logo,
         "seuil": 50e3,
         "idcible": Globals.chevalier.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },    
@@ -60,7 +60,7 @@ module.exports = [
         "logo": Globals.graal.logo,
         "seuil": 100e3,
         "idcible": Globals.graal.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -69,7 +69,7 @@ module.exports = [
         "logo": Globals.graal.logo,
         "seuil": 200e3,
         "idcible": Globals.graal.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -78,7 +78,7 @@ module.exports = [
         "logo": Globals.graal.logo,
         "seuil": 300e3,
         "idcible": Globals.graal.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },
@@ -87,7 +87,7 @@ module.exports = [
         "logo": Globals.graal.logo,
         "seuil": 400e3,
         "idcible": Globals.graal.id,
-        "ratio": 3,
+        "ratio": 2,
         "typeratio": "gain",
         "unlocked": false
     },

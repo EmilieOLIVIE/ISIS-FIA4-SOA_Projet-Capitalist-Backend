@@ -36,7 +36,7 @@ module.exports = {
             "unlocked": false
         },
         {
-            "name": "C'que j'dis, tout l'monde s'en tamponne ! Je gueule je gueule, j'pourrai gueuler dans l'cul d'un poney qu'ce s'rait pareil !",
+            "name": "C'que j'dis, tout l'monde s'en tamponne ! Je gueule, je gueule, j'pourrais gueuler dans l'cul d'un poney qu'ce s'rait pareil !",
             "logo": logo,
             "seuil": 75,
             "idcible": id,

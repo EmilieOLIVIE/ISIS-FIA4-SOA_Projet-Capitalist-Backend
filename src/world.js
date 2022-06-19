@@ -7,7 +7,7 @@ const upgrades = require("./world/upgrades/upgrades");
 module.exports = {
     "name": "Kaamelott",
     "logo": "icones/logoKaamelott.png",
-    "money": 10000,
+    "money": 0,
     "score": 0,
     "totalangels": 0,
     "activeangels": 0,

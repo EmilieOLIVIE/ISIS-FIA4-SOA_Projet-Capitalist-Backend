@@ -40,11 +40,12 @@ module.exports = {
             product.cout = getGeometricSequenceNTerm(product.cout, product.croissance, args.quantite + 1)
 
             //If product reached a new level, update product revenue or speed
-            let newLevel = product.paliers.forEach(palier => {
-                if (!palier.unlocked && product.quantite > palier.seuil) {
+            product.paliers.forEach(level => {
+                if (!level.unlocked && product.quantite >= level.seuil) {
                     //Unlock new level
-                    newLevel.unlocked = true
-                    context = updateProduct(context, newLevel)
+                    level.unlocked = true
+                    //Then update product
+                    context = updateProduct(context, level)
                 }
             })
 
@@ -127,7 +128,7 @@ module.exports = {
 
             let angelUpgrade = context.world.angelupgrades.find(upgrade => upgrade.name === args.name)
 
-            if (world.activeangels < angelUpgrade.seuil) throw new Error(ERRORS.INSUFFICIENT_MONEY)
+            if (context.world.activeangels < angelUpgrade.seuil) throw new Error(ERRORS.INSUFFICIENT_MONEY)
             if (angelUpgrade.unlocked) throw new Error(ERRORS.ALREADY_UNLOCKED)
 
             //Unlock upgrade
@@ -136,7 +137,7 @@ module.exports = {
             //Update target characteristics
             context = updateProduct(context, angelUpgrade)
 
-            context.world.money = context.world.money - angelUpgrade.seuil
+            context.world.activeangels = context.world.activeangels - angelUpgrade.seuil
 
             //Save world
             saveWorld(context)
@@ -153,9 +154,9 @@ module.exports = {
             context.world = world
 
             //Update world's total angels & score
-            context.activeangels = earnedAngels
-            context.totalangels = totalangels
-            context.score = score
+            context.world.activeangels = earnedAngels
+            context.world.totalangels = totalangels
+            context.world.score = score
 
             //Save changes
             saveWorld(context)

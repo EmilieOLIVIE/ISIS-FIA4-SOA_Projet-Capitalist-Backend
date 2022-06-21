@@ -4,7 +4,7 @@ module.exports = [
     {
         "name": "Ben heureusement qu’on s’est pas fait construire un buffet à vaisselle !",
         "logo": Globals.all.logo,
-        "seuil": 30,
+        "seuil": 10,
         "idcible": Globals.all.id,
         "ratio": 2,
         "typeratio": "gain",
@@ -13,7 +13,7 @@ module.exports = [
     {
         "name": "Je vais tout casser, ici, MOI ! Kaamelott, Kaamelott... il va rester un tas de caaaailloux, comme ça ! Je veux l'or, tout l'or, sinon c'est la guerre !",
         "logo": Globals.all.logo,
-        "seuil": 50,
+        "seuil": 30,
         "idcible": Globals.all.id,
         "ratio": 2,
         "typeratio": "gain",
@@ -22,7 +22,7 @@ module.exports = [
     {
         "name": "Sire, Sire ! On en a gros !",
         "logo": Globals.all.logo,
-        "seuil": 75,
+        "seuil": 50,
         "idcible": Globals.all.id,
         "ratio": 2,
         "typeratio": "gain",
@@ -31,7 +31,7 @@ module.exports = [
     {
         "name": "Je ne mange pas de graines !",
         "logo": Globals.all.logo,
-        "seuil": 100,
+        "seuil": 75,
         "idcible": Globals.all.id,
         "ratio": 2,
         "typeratio": "gain",
@@ -40,7 +40,7 @@ module.exports = [
     {
         "name": "Si Monsieur et Madame préfèrent s'envoyer des fions dans l'intimité, je peux aussi me retirer.",
         "logo": Globals.all.logo,
-        "seuil": 150,
+        "seuil": 100,
         "idcible": Globals.all.id,
         "ratio": 2,
         "typeratio": "gain",

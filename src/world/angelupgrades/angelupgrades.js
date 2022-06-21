@@ -20,7 +20,7 @@ module.exports = [
         "unlocked": false
     },
     {
-        "name": "Mais évidemment c'est sans alcool !",
+        "name": "Mais évidemment, c'est sans alcool !",
         "logo": Globals.angels.logo,
         "seuil": 100,
         "idcible": Globals.all.id,

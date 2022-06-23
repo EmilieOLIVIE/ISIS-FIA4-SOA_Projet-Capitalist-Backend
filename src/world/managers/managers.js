@@ -22,7 +22,7 @@ module.exports = [
     {
         "name": "Provencal le Gaulois",
         "logo": "icones/managers/perceval.png",
-        "seuil": 1e6,
+        "seuil": 1e4,
         "idcible": Globals.jeuSociete.id,
         "ratio": null,
         "typeratio": null,
@@ -31,7 +31,7 @@ module.exports = [
     {
         "name": "Le Blanc Chevalier",
         "logo": "icones/managers/lancelot.png",
-        "seuil": 5e6,
+        "seuil": 5e5,
         "idcible": Globals.chevalier.id,
         "ratio": null,
         "typeratio": null,

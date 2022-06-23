@@ -35,6 +35,8 @@ module.exports = {
             if (context.world.money < calcGeometricSequenceNSum(product.cout, product.croissance, args.quantite))
                 throw new Error(ERRORS.INSUFFICIENT_MONEY)
 
+            //Update world's money
+            context.world.money -= calcGeometricSequenceNSum(product.cout, product.croissance, args.quantite)
             //Update product quantity & cost
             product.quantite += args.quantite
             product.cout = getGeometricSequenceNTerm(product.cout, product.croissance, args.quantite + 1)
@@ -61,9 +63,6 @@ module.exports = {
                     }
                 }
             })
-
-            //Update world's money
-            context.world.money -= calcGeometricSequenceNSum(product.cout, product.croissance, args.quantite)
 
             //Save changes
             saveWorld(context)

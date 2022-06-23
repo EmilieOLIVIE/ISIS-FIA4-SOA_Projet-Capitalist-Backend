@@ -25,7 +25,7 @@ module.exports = [
         "seuil": 50,
         "idcible": Globals.all.id,
         "ratio": 2,
-        "typeratio": "gain",
+        "typeratio": "vitesse",
         "unlocked": false
     },
     {
@@ -44,6 +44,15 @@ module.exports = [
         "idcible": Globals.all.id,
         "ratio": 2,
         "typeratio": "gain",
+        "unlocked": false
+    },
+    {
+        "name": "La fleur en bouquet fane, et jamais ne renaît !",
+        "logo": Globals.all.logo,
+        "seuil": 125,
+        "idcible": Globals.all.id,
+        "ratio": 2,
+        "typeratio": "vitesse",
         "unlocked": false
     }
 ]

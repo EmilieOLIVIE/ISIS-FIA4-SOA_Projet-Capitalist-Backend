@@ -189,26 +189,28 @@ function calcScore(context) {
     let elapsedTime = Date.now() - parseInt(context.world.lastupdate) //Calculate elapsed time since last update
 
     products.forEach(product => {
-        //If manager is unlocked
-        if (product.managerUnlocked) {
-            //Calculate number of products produced
-            let nbOfProducts = Math.trunc(elapsedTime / product.vitesse)
-            //If products have been produced
-            if (nbOfProducts > 0) {
-                //Update product production time according to elapsed time
-                product.timeleft = product.vitesse - (elapsedTime % product.vitesse)
-                //Elapsed time / speed products have been created
-                money = nbOfProducts * product.quantite * product.revenu * (1 + world.angelbonus * world.activeangels / 100)
-            } else product.timeleft -= elapsedTime
-        }
-        //If production time is not null, product is being produced
-        else if (product.timeleft !== 0) {
-            product.timeleft -= elapsedTime
-            if (product.timeleft < 0 && product.timeleft <= elapsedTime) {
-                //If manager is not yet unlocked, only 1 product has been created
+        //If manager is unlocked or product is in production
+        if (product.timeleft !== 0 || product.managerUnlocked) {
+            let nbOfProducts = 0
+            product.lastupdate = Date.now()
+            let time = elapsedTime - product.timeleft
+            //If elapsed time is higher than product time left, 
+            //at least one product has been produced 
+            if (time >= 0) {
+                nbOfProducts = 1
                 product.timeleft = 0
-                money = product.revenu * product.quantite * (1 + world.angelbonus * world.activeangels / 100)
+                //In case manager is unlocked, product may have been produced several times
+        if (product.managerUnlocked) {
+                    //Calculate how many batches of product have been produced
+                    nbOfProducts += Math.trunc(time / product.vitesse)
+                    //Calculate remaining time to produce current batch
+                    product.timeleft = product.vitesse - (time % product.vitesse)
+        }
+                //Calculate how much money was earned
+                money += nbOfProducts * product.quantite * product.revenu * (1 + world.angelbonus * world.activeangels / 100)
             }
+            //Othwerwise, product is still in production, update its time left
+            else product.timeleft = -time
         }
     })
 

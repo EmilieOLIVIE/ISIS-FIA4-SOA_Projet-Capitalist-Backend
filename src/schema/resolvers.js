@@ -70,10 +70,27 @@ module.exports = {
             return product
         },
         lancerProductionProduit(parent, args, context) {
-            context = calcScore(context)
-
+            //Find product in world
             let product = context.world.products.find(element => element.id === args.id)
+            if (!product) throw new Error(`Le produit avec l'id ${args.id} n'existe pas`)
+
+            /*** /!\ WARNING ***/
+            /* Code below is not secure ; it can be exploited if lancerProductionProduit is called outstide of dedicated Frontend context 
+            (which prevents function call if product is not finished being produced). This glitch has been introduced purposedly to
+            palliate client-server delay in score calculation when product production is not automated, though it is not a clean solution. */
+
+            //If product timeleft is not null, it has been produced once before and is now finished
+            if (product.timeleft !== 0) {
+                //Add money gained to world money and score
+                let gain = product.quantite * product.revenu * (1 + world.angelbonus * world.activeangels / 100)
+                context.world.money += gain
+                context.world.score += gain
+            }
+            /*** WARNING END ***/
+
             product.timeleft = product.vitesse
+
+            context = calcScore(context)
 
             //Save world
             saveWorld(context)
@@ -200,12 +217,12 @@ function calcScore(context) {
                 nbOfProducts = 1
                 product.timeleft = 0
                 //In case manager is unlocked, product may have been produced several times
-        if (product.managerUnlocked) {
+                if (product.managerUnlocked) {
                     //Calculate how many batches of product have been produced
                     nbOfProducts += Math.trunc(time / product.vitesse)
                     //Calculate remaining time to produce current batch
                     product.timeleft = product.vitesse - (time % product.vitesse)
-        }
+                }
                 //Calculate how much money was earned
                 money += nbOfProducts * product.quantite * product.revenu * (1 + world.angelbonus * world.activeangels / 100)
             }

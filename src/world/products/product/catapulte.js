@@ -1,4 +1,4 @@
-const Globals = require("../Globals");
+const Globals = require("../../Globals");
 
 const id = Globals.catapulte.id;
 const logo = Globals.catapulte.logo;

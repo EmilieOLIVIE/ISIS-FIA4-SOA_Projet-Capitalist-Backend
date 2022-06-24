@@ -1,4 +1,4 @@
-const Globals = require("../Globals");
+const Globals = require("../../Globals");
 
 const id = Globals.jeuSociete.id;
 const logo = Globals.jeuSociete.logo;

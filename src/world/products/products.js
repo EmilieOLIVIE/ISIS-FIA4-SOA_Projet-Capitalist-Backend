@@ -1,9 +1,9 @@
-const chou = require("./chou");
-const jambon = require("./jambon");
-const jeuSociete = require("./jeuSociete");
-const chevalier = require("./chevalier");
-const catapulte = require("./catapulte");
-const graal = require("./graal");
+const chou = require("./product/chou");
+const jambon = require("./product/jambon");
+const jeuSociete = require("./product/jeuSociete");
+const chevalier = require("./product/chevalier");
+const catapulte = require("./product/catapulte");
+const graal = require("./product/graal");
 
 module.exports = [
     chou,

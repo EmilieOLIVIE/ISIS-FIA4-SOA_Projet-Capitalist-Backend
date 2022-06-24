@@ -1,4 +1,4 @@
-const Globals = require("../Globals");
+const Globals = require("../../Globals");
 
 const id = Globals.jambon.id;
 const logo = Globals.jambon.logo;
@@ -28,7 +28,7 @@ module.exports = {
         {
             "name": "La joie de vivre et le jambon, y a pas 36 recettes du bonheur",
             "logo": logo,
-            "seuil": 75,
+            "seuil": 50,
             "idcible": id,
             "ratio": 2,
             "typeratio": typeratio.gain,
@@ -37,7 +37,16 @@ module.exports = {
         {
             "name": "C'est d'la merde",
             "logo": logo,
-            "seuil": 150,
+            "seuil": 75,
+            "idcible": id,
+            "ratio": 5,
+            "typeratio": typeratio.gain,
+            "unlocked": false
+        },
+        {
+            "name": "Mais y’a rien à développer. C’est d’la merde, c’est tout. Moi on me sert ça dans une auberge, le tavernier il s’prend une quiche dans sa tête.",
+            "logo": logo,
+            "seuil": 100,
             "idcible": id,
             "ratio": 5,
             "typeratio": typeratio.gain,

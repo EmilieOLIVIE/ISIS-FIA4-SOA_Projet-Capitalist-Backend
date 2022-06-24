@@ -1,60 +1,68 @@
 const Globals = require("../Globals");
 
+const catapulteAngelUpgrades = require("./product/catapulteAngelUpgrades");
+const chevalierAngelUpgrades = require("./product/chevalierAngelUpgrades");
+const chouAngelUpgrades = require("./product/chouAngelUpgrades");
+const graalAngelUpgrades = require("./product/graalAngelUpgrades");
+const jambonAngelUpgrades = require("./product/jambonAngelUpgrades");
+const jeuSocieteAngelUpgrades = require("./product/jeuSocieteAngelUpgrades");
+
+const allId = Globals.all.id;
+const angelLogo = Globals.angels.logo;
+const typeratio = Globals.typeratio;
+
 module.exports = [
     {
         "name": "Qu'est-ce qui est petit et marron ? \n [Un marron.] \n Putain, il est fort ce con.",
-        "logo": Globals.angels.logo,
+        "logo": angelLogo,
         "seuil": 10,
-        "idcible": Globals.all.id,
+        "idcible": allId,
         "ratio": 2,
-        "typeratio": "gain",
+        "typeratio": typeratio.gain,
         "unlocked": false
     },
     {
         "name": "Mais moi je viens pas vous emmerder quand vous cramez des sorcières, alors foutez-moi la paix.",
-        "logo": Globals.angels.logo,
+        "logo": angelLogo,
         "seuil": 100,
-        "idcible": Globals.all.id,
+        "idcible": allId,
         "ratio": 2,
-        "typeratio": "vitesse",
+        "typeratio": typeratio.vitesse,
         "unlocked": false
     },
     {
         "name": "Mais évidemment, c'est sans alcool !",
-        "logo": Globals.angels.logo,
+        "logo": angelLogo,
         "seuil": 1000,
-        "idcible": Globals.all.id,
+        "idcible": allId,
         "ratio": 2,
-        "typeratio": "gain",
+        "typeratio": typeratio.gain,
         "unlocked": false
     },
     {
         "name": "Vous n’êtes pas le plus fort, Môssieur Élias ! Quand on confond un clafoutis et UNE PART de clafoutis, on vient pas la ramener !",
-        "logo": Globals.angels.logo,
+        "logo": angelLogo,
         "seuil": 1e6,
-        "idcible": Globals.all.id,
+        "idcible": allId,
         "ratio": 2,
-        "typeratio": "vitesse",
+        "typeratio": typeratio.vitesse,
         "unlocked": false
     },
     {
         "name": "Alors le chevalier il crie au Romain : Hé ! Vous vous prenez pour le Colisée ?",
-        "logo": Globals.angels.logo,
+        "logo": angelLogo,
         "seuil": 1e9,
-        "idcible": Globals.all.id,
+        "idcible": allId,
         "ratio": 2,
-        "typeratio": "gain",
+        "typeratio": typeratio.gain,
         "unlocked": false
     },
-    {
-        "name": "Non mais là ! Pourtant vous allez pas dire que j'suis à cheval sur les principes ! Mais question chasteté on a quand même un chevalier sur huit qui est cul nu !",
-        "logo": Globals.chevalier.logo,
-        "seuil": 25e6,
-        "idcible": Globals.chevalier.id,
-        "ratio": 2,
-        "typeratio": "gain",
-        "unlocked": false
-    },    
+    ...chouAngelUpgrades,
+    ...jambonAngelUpgrades,
+    ...jeuSocieteAngelUpgrades,
+    ...chevalierAngelUpgrades,
+    ...catapulteAngelUpgrades,
+    ...graalAngelUpgrades
 ]
 
 /*
@@ -64,7 +72,7 @@ module.exports = [
         "seuil": 10,
         "idcible": Globals.all.id,
         "ratio": 2,
-        "typeratio": "gain",
+        "typeratio": typeratio.gain,
         "unlocked": false
     },
     {
@@ -73,7 +81,7 @@ module.exports = [
         "seuil": 100,
         "idcible": Globals.all.id,
         "ratio": 2,
-        "typeratio": "gain",
+        "typeratio": typeratio.gain,
         "unlocked": false
     },
     {
@@ -82,7 +90,7 @@ module.exports = [
         "seuil": 10,
         "idcible": Globals.all.id,
         "ratio": 2,
-        "typeratio": "gain",
+        "typeratio": typeratio.gain,
         "unlocked": false
     },
 
